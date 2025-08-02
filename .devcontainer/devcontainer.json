@@ -1,0 +1,7 @@
+{
+  "name": "Getting Back Dev",
+  "image": "mcr.microsoft.com/devcontainers/ruby:3.3-bullseye",
+  "forwardPorts": [3000],
+  "postCreateCommand": "gem install rails -v 8.0.2",
+  "remoteUser": "vscode"
+}
