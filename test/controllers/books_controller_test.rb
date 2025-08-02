@@ -45,4 +45,9 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to books_url
   end
+
+  # Teste que vai falhar intencionalmente para testar CI/CD
+  test "this test will fail" do
+    assert false, "Este teste vai falhar para testar se o CI/CD bloqueia o deploy"
+  end
 end
