@@ -86,4 +86,10 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # Asset configuration for production
+  config.assets.compile = false
+  config.assets.digest = true
+  config.assets.version = '1.0'
+  config.assets.precompile += %w( application.css application.js )
 end
