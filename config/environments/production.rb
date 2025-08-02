@@ -90,6 +90,6 @@ Rails.application.configure do
   # Asset configuration for production
   config.assets.compile = false
   config.assets.digest = true
-  config.assets.version = '1.0'
-  config.assets.precompile += %w( application.css application.js )
+  config.assets.version = "1.0"
+  config.assets.precompile += %w[application.css application.js]
 end
