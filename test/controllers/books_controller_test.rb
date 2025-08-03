@@ -45,9 +45,4 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to books_url
   end
-
-  # Teste que vai falhar para testar se o Render respeita o CI/CD
-  test "this test will fail to test CI/CD protection" do
-    assert false, "Este teste vai falhar para testar se o Render agora respeita o CI/CD"
-  end
 end
