@@ -1,65 +1,77 @@
-<%= form_with(model: book, class: "contents") do |form| %>
-  <% if book.errors.any? %>
-    <div id="error_explanation" class="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
-      <h2 class="font-medium mb-2"><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
-      <ul class="list-disc ml-6 space-y-1 text-sm">
-        <% book.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="bg-white rounded-lg border border-gray-200 p-6">
-    <div class="space-y-6">
-      <div>
-        <%= form.label :title, class: "block text-sm font-medium text-gray-700 mb-2" %>
-        <%= form.text_field :title, 
-            class: ["w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200", 
-                   {"border-gray-300": book.errors[:title].none?, "border-red-300": book.errors[:title].any?}],
-            placeholder: "Enter the book title..." %>
+<%= form_with(model: book, class: "space-y-6") do |form| %>
+  <div class="form-control w-full">
+    <%= form.label :title, "Título", class: "label" %>
+    <%= form.text_field :title, 
+        class: "input input-bordered w-full #{book.errors[:title].any? ? 'input-error' : ''}", 
+        placeholder: "Digite o título do livro" %>
+    <% if book.errors[:title].any? %>
+      <div class="label">
+        <span class="label-text-alt text-error">
+          <%= book.errors[:title].join(', ') %>
+        </span>
       </div>
+    <% end %>
+  </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <%= form.label :author, class: "block text-sm font-medium text-gray-700 mb-2" %>
-          <%= form.text_field :author, 
-              class: ["w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200", 
-                     {"border-gray-300": book.errors[:author].none?, "border-red-300": book.errors[:author].any?}],
-              placeholder: "Author name..." %>
-        </div>
-
-        <div>
-          <%= form.label :published_at, class: "block text-sm font-medium text-gray-700 mb-2" %>
-          <%= form.datetime_field :published_at, 
-              class: ["w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200", 
-                     {"border-gray-300": book.errors[:published_at].none?, "border-red-300": book.errors[:published_at].any?}] %>
-        </div>
+  <div class="form-control w-full">
+    <%= form.label :author, "Autor", class: "label" %>
+    <%= form.text_field :author, 
+        class: "input input-bordered w-full #{book.errors[:author].any? ? 'input-error' : ''}", 
+        placeholder: "Digite o nome do autor" %>
+    <% if book.errors[:author].any? %>
+      <div class="label">
+        <span class="label-text-alt text-error">
+          <%= book.errors[:author].join(', ') %>
+        </span>
       </div>
+    <% end %>
+  </div>
 
-      <div>
-        <%= form.label :description, class: "block text-sm font-medium text-gray-700 mb-2" %>
-        <%= form.text_area :description, 
-            rows: 6,
-            class: ["w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200", 
-                   {"border-gray-300": book.errors[:description].none?, "border-red-300": book.errors[:description].any?}],
-            placeholder: "Write a brief description of the book..." %>
+  <div class="form-control w-full">
+    <%= form.label :description, "Descrição", class: "label" %>
+    <%= form.text_area :description, 
+        rows: 4, 
+        class: "textarea textarea-bordered w-full #{book.errors[:description].any? ? 'textarea-error' : ''}", 
+        placeholder: "Digite uma breve descrição do livro" %>
+    <% if book.errors[:description].any? %>
+      <div class="label">
+        <span class="label-text-alt text-error">
+          <%= book.errors[:description].join(', ') %>
+        </span>
       </div>
-    </div>
+    <% end %>
+  </div>
 
-    <div class="flex justify-end space-x-3 mt-8 pt-6 border-t border-gray-200">
-      <%= link_to books_path, class: "px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition-colors duration-200" do %>
-        <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-        </svg>
-        Cancel
-      <% end %>
-      <%= form.submit class: "inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors duration-200" do %>
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-        </svg>
-        Save Book
-      <% end %>
-    </div>
+  <div class="form-control w-full">
+    <%= form.label :status, "Status", class: "label" %>
+    <%= form.select :status, 
+        Book.statuses.map { |key, value| [key.humanize, key] }, 
+        { selected: book.status || 'draft' }, 
+        { class: "select select-bordered w-full #{book.errors[:status].any? ? 'select-error' : ''}" } %>
+    <% if book.errors[:status].any? %>
+      <div class="label">
+        <span class="label-text-alt text-error">
+          <%= book.errors[:status].join(', ') %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-control w-full">
+    <%= form.label :published_at, "Data de Publicação", class: "label" %>
+    <%= form.date_field :published_at, 
+        class: "input input-bordered w-full #{book.errors[:published_at].any? ? 'input-error' : ''}" %>
+    <% if book.errors[:published_at].any? %>
+      <div class="label">
+        <span class="label-text-alt text-error">
+          <%= book.errors[:published_at].join(', ') %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="flex gap-4">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancelar", books_path, class: "btn btn-ghost" %>
   </div>
 <% end %>

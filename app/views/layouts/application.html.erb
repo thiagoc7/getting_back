@@ -1,32 +1,170 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="light">
   <head>
-    <title><%= content_for(:title) || "Getting Back" %></title>
+    <title>Getting Back</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
     
-    <%# Flowbite CSS %>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
   <body>
-    <%= yield %>
-    
-    <%# Flowbite JavaScript %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <div class="drawer lg:drawer-open">
+      <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+      
+      <!-- Page content here -->
+      <div class="drawer-content flex flex-col">
+        <!-- Navbar -->
+        <div class="w-full navbar bg-base-100 border-b border-base-300">
+          <div class="flex-none lg:hidden">
+            <label for="my-drawer-2" aria-label="open sidebar" class="btn btn-square btn-ghost">
+              <svg class="inline-block w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </label>
+          </div>
+          <div class="flex-1">
+            <h1 class="text-xl font-bold">Library</h1>
+          </div>
+          <div class="flex-none">
+            <!-- Theme selector -->
+            <div class="dropdown dropdown-end">
+              <div tabindex="0" role="button" class="btn btn-ghost">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+                </svg>
+                Tema
+              </div>
+              <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                <li><a data-set-theme="light" data-act-class="ACTIVECLASS">🌞 Light</a></li>
+                <li><a data-set-theme="dark" data-act-class="ACTIVECLASS">🌙 Dark</a></li>
+                <li><a data-set-theme="cupcake" data-act-class="ACTIVECLASS">🧁 Cupcake</a></li>
+                <li><a data-set-theme="bumblebee" data-act-class="ACTIVECLASS">🐝 Bumblebee</a></li>
+                <li><a data-set-theme="emerald" data-act-class="ACTIVECLASS">💎 Emerald</a></li>
+                <li><a data-set-theme="corporate" data-act-class="ACTIVECLASS">🏢 Corporate</a></li>
+                <li><a data-set-theme="synthwave" data-act-class="ACTIVECLASS">🌆 Synthwave</a></li>
+                <li><a data-set-theme="retro" data-act-class="ACTIVECLASS">📺 Retro</a></li>
+                <li><a data-set-theme="cyberpunk" data-act-class="ACTIVECLASS">🤖 Cyberpunk</a></li>
+                <li><a data-set-theme="valentine" data-act-class="ACTIVECLASS">💝 Valentine</a></li>
+                <li><a data-set-theme="halloween" data-act-class="ACTIVECLASS">🎃 Halloween</a></li>
+                <li><a data-set-theme="garden" data-act-class="ACTIVECLASS">🌱 Garden</a></li>
+                <li><a data-set-theme="forest" data-act-class="ACTIVECLASS">🌲 Forest</a></li>
+                <li><a data-set-theme="aqua" data-act-class="ACTIVECLASS">🌊 Aqua</a></li>
+                <li><a data-set-theme="lofi" data-act-class="ACTIVECLASS">🎧 Lo-Fi</a></li>
+                <li><a data-set-theme="pastel" data-act-class="ACTIVECLASS">🎨 Pastel</a></li>
+                <li><a data-set-theme="fantasy" data-act-class="ACTIVECLASS">🧚 Fantasy</a></li>
+                <li><a data-set-theme="wireframe" data-act-class="ACTIVECLASS">📐 Wireframe</a></li>
+                <li><a data-set-theme="black" data-act-class="ACTIVECLASS">⚫ Black</a></li>
+                <li><a data-set-theme="luxury" data-act-class="ACTIVECLASS">💎 Luxury</a></li>
+                <li><a data-set-theme="dracula" data-act-class="ACTIVECLASS">🧛 Dracula</a></li>
+                <li><a data-set-theme="cmyk" data-act-class="ACTIVECLASS">🖨️ CMYK</a></li>
+                <li><a data-set-theme="autumn" data-act-class="ACTIVECLASS">🍂 Autumn</a></li>
+                <li><a data-set-theme="business" data-act-class="ACTIVECLASS">💼 Business</a></li>
+                <li><a data-set-theme="acid" data-act-class="ACTIVECLASS">⚗️ Acid</a></li>
+                <li><a data-set-theme="lemonade" data-act-class="ACTIVECLASS">🍋 Lemonade</a></li>
+                <li><a data-set-theme="night" data-act-class="ACTIVECLASS">🌃 Night</a></li>
+                <li><a data-set-theme="coffee" data-act-class="ACTIVECLASS">☕ Coffee</a></li>
+                <li><a data-set-theme="winter" data-act-class="ACTIVECLASS">❄️ Winter</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Main content -->
+        <div class="p-6 bg-base-200 min-h-screen">
+          <% if notice %>
+            <div class="alert alert-success mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span><%= notice %></span>
+            </div>
+          <% end %>
+          
+          <%= yield %>
+        </div>
+      </div>
+      
+      <!-- Sidebar -->
+      <div class="drawer-side">
+        <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label> 
+        <aside class="min-h-full w-80 bg-base-100 text-base-content border-r border-base-300">
+          <!-- Sidebar content here -->
+          <div class="p-6">
+            <div class="flex items-center mb-8">
+              <div class="w-8 h-8 bg-primary text-primary-content rounded flex items-center justify-center mr-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+              </div>
+              <span class="text-xl font-bold">Library</span>
+            </div>
+            
+            <nav class="space-y-2">
+              <%= link_to books_path, class: "flex items-center px-4 py-3 text-primary bg-primary/10 rounded-lg font-medium" do %>
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                </svg>
+                Books
+              <% end %>
+              
+              <a class="flex items-center px-4 py-3 text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-lg transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                Authors
+              </a>
+              
+              <a class="flex items-center px-4 py-3 text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-lg transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                Analytics
+              </a>
+            </nav>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Theme switcher script -->
+    <script>
+      // Get all theme buttons
+      const themeButtons = document.querySelectorAll('[data-set-theme]');
+      
+      // Add click event to each button
+      themeButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          const theme = button.getAttribute('data-set-theme');
+          
+          // Set the theme
+          document.documentElement.setAttribute('data-theme', theme);
+          
+          // Save to localStorage
+          localStorage.setItem('theme', theme);
+          
+          // Update active class
+          themeButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+        });
+      });
+      
+      // Load saved theme on page load
+      document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        
+        // Set active class
+        const activeButton = document.querySelector(`[data-set-theme="${savedTheme}"]`);
+        if (activeButton) {
+          activeButton.classList.add('active');
+        }
+      });
+    </script>
   </body>
 </html>
