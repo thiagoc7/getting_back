@@ -104,12 +104,9 @@
                   <%= link_to edit_book_path(book), class: "btn btn-xs btn-warning" do %>
                     Edit
                   <% end %>
-                  <%= link_to book_path(book), 
-                      method: :delete, 
-                      data: { confirm: "Are you sure?" }, 
-                      class: "btn btn-xs btn-error" do %>
-                    Delete
-                  <% end %>
+                  <%= link_to "Delete", book_path(book), 
+                      data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, 
+                      class: "btn btn-xs btn-error" %>
                 </div>
               </td>
             </tr>
