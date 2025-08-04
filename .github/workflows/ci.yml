@@ -58,8 +58,8 @@ jobs:
           echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
-          # Use a specific ChromeDriver version that exists
-          wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
+          # Use ChromeDriver version 138.0.7204.183 to match Chrome version
+          wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/138.0.7204.183/chromedriver_linux64.zip
           sudo unzip /tmp/chromedriver.zip -d /usr/local/bin/
           sudo chmod +x /usr/local/bin/chromedriver
           google-chrome --version
