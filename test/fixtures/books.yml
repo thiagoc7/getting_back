@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  author: MyString
-  description: MyText
+  title: "The Great Gatsby"
+  author: "F. Scott Fitzgerald"
+  description: "A story of the Jazz Age"
   published_at: 2025-08-02 01:09:09
 
 two:
-  title: MyString
-  author: MyString
-  description: MyText
+  title: "To Kill a Mockingbird"
+  author: "Harper Lee"
+  description: "A story about racial injustice"
   published_at: 2025-08-02 01:09:09
