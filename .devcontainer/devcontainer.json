@@ -1,7 +1,21 @@
 {
   "name": "Getting Back Dev",
-  "image": "mcr.microsoft.com/devcontainers/ruby:3.3-bullseye",
+  "image": "mcr.microsoft.com/devcontainers/ruby:3.3",
   "forwardPorts": [3000],
-  "postCreateCommand": "gem install rails -v 8.0.2",
-  "remoteUser": "vscode"
+  "postCreateCommand": "rbenv install 3.3.8 && rbenv global 3.3.8 && gem install rails -v 8.0.2 && gem install bundler && bundle install",
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rebornix.Ruby",
+        "shopify.ruby-lsp",
+        "wingrunr21.vscode-ruby",
+        "ms-vscode.vscode-json",
+        "GitHub.vscode-pull-request-github"
+      ]
+    }
+  }
 }
