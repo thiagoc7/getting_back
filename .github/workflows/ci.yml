@@ -62,6 +62,8 @@ jobs:
           wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION/chromedriver_linux64.zip
           sudo unzip /tmp/chromedriver.zip -d /usr/local/bin/
           sudo chmod +x /usr/local/bin/chromedriver
+          google-chrome --version
+          chromedriver --version
 
       - name: Setup test database
         env:
@@ -78,7 +80,10 @@ jobs:
       - name: Run system tests
         env:
           RAILS_ENV: test
-        run: bin/rails test:system
+          DISPLAY: :99
+        run: |
+          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+          bin/rails test:system
 
       - name: Upload screenshots from failed system tests
         uses: actions/upload-artifact@v4
