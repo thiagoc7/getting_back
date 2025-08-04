@@ -1,0 +1,71 @@
+<!-- Header -->
+<div class="mb-8">
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold mb-2">New Chapter</h1>
+      <p class="text-base-content/70">Add a new chapter to "<%= @book.title %>"</p>
+    </div>
+    <div class="flex gap-2">
+      <%= link_to book_chapters_path(@book), class: "btn btn-ghost" do %>
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Back to Chapters
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- Form -->
+<div class="card bg-base-100 shadow-xl">
+  <div class="card-body">
+    <h2 class="card-title mb-6">Chapter Details</h2>
+    
+    <%= form_with(model: [@book, @chapter], class: "space-y-6", multipart: true) do |form| %>
+      <div class="form-control w-full">
+        <%= form.label :title, "Title", class: "label" %>
+        <%= form.text_field :title,
+            class: "input input-bordered w-full #{@chapter.errors[:title].any? ? 'input-error' : ''}",
+            placeholder: "Enter chapter title" %>
+        <% if @chapter.errors[:title].any? %>
+          <div class="label">
+            <span class="label-text-alt text-error">
+              <%= @chapter.errors[:title].join(', ') %>
+            </span>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="form-control w-full">
+        <%= form.label :content, "Content", class: "label" %>
+        <%= form.text_area :content,
+            rows: 8,
+            class: "textarea textarea-bordered w-full #{@chapter.errors[:content].any? ? 'textarea-error' : ''}",
+            placeholder: "Write your chapter content here..." %>
+        <% if @chapter.errors[:content].any? %>
+          <div class="label">
+            <span class="label-text-alt text-error">
+              <%= @chapter.errors[:content].join(', ') %>
+            </span>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="form-control w-full">
+        <%= form.label :photos, "Photos", class: "label" %>
+        <%= form.file_field :photos,
+            multiple: true,
+            accept: "image/*",
+            class: "file-input file-input-bordered w-full" %>
+        <div class="label">
+          <span class="label-text-alt">Hold Ctrl (or Cmd on Mac) to select multiple photos. Supported formats: JPG, PNG, GIF</span>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <%= form.submit "Create Chapter", class: "btn btn-primary" %>
+        <%= link_to "Cancel", book_chapters_path(@book), class: "btn btn-ghost" %>
+      </div>
+    <% end %>
+  </div>
+</div>
