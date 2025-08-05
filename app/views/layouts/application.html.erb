@@ -133,38 +133,50 @@
 
     <!-- Theme switcher script -->
     <script>
-      // Get all theme buttons
-      const themeButtons = document.querySelectorAll('[data-set-theme]');
-      
-      // Add click event to each button
-      themeButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-          e.preventDefault();
-          const theme = button.getAttribute('data-set-theme');
-          
-          // Set the theme
-          document.documentElement.setAttribute('data-theme', theme);
-          
-          // Save to localStorage
-          localStorage.setItem('theme', theme);
-          
-          // Update active class
-          themeButtons.forEach(btn => btn.classList.remove('active'));
-          button.classList.add('active');
-        });
-      });
-      
-      // Load saved theme on page load
-      document.addEventListener('DOMContentLoaded', () => {
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
+      // Prevent multiple executions
+      if (!window.themeInitialized) {
+        window.themeInitialized = true;
         
-        // Set active class
-        const activeButton = document.querySelector(`[data-set-theme="${savedTheme}"]`);
-        if (activeButton) {
-          activeButton.classList.add('active');
+        // Get all theme buttons
+        const themeButtons = document.querySelectorAll('[data-set-theme]');
+        
+        // Add click event to each button
+        themeButtons.forEach(button => {
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const theme = button.getAttribute('data-set-theme');
+            
+            // Set the theme
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            // Save to localStorage
+            localStorage.setItem('theme', theme);
+            
+            // Update active class
+            themeButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+          });
+        });
+        
+        // Load saved theme on page load
+        const loadTheme = () => {
+          const savedTheme = localStorage.getItem('theme') || 'light';
+          document.documentElement.setAttribute('data-theme', savedTheme);
+          
+          // Set active class
+          const activeButton = document.querySelector(`[data-set-theme="${savedTheme}"]`);
+          if (activeButton) {
+            activeButton.classList.add('active');
+          }
+        };
+        
+        // Load theme immediately if DOM is ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', loadTheme);
+        } else {
+          loadTheme();
         }
-      });
+      }
     </script>
   </body>
 </html>
