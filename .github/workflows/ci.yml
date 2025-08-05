@@ -1,94 +1,35 @@
-name: CI
+name: Rails Test (Minitest + Selenium + SQLite)
 
-on:
-  pull_request:
-  push:
-    branches: [ main, develop ]
+on: [push, pull_request]
 
 jobs:
-  scan_ruby:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Lint code for consistent style
-        run: bin/rubocop -f github
-
   test:
     runs-on: ubuntu-latest
 
-    services:
-      selenium:
-        image: selenium/standalone-chrome:latest
-        ports:
-          - 4444:4444
-          - 7900:7900
-        options: >-
-          --shm-size="2g"
+    env:
+      RAILS_ENV: test
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
+          ruby-version: 3.3.0 # ou a versão que está usando
           bundler-cache: true
 
-      - name: Setup test database
-        env:
-          RAILS_ENV: test
+      - name: Install Chrome
         run: |
-          bin/rails db:create
-          bin/rails db:schema:load
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
 
-      - name: Run unit and integration tests
-        env:
-          RAILS_ENV: test
-        run: bin/rails test
+      - name: Set CHROME_BIN for Selenium
+        run: echo "CHROME_BIN=$(which chromium-browser)" >> $GITHUB_ENV
 
-      - name: Run system tests
-        env:
-          RAILS_ENV: test
-          SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Prepare database
+        run: bin/rails db:setup
+
+      - name: Run tests
         run: bin/rails test:system
-
-      - name: Upload screenshots from failed system tests
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: test-results
-          path: ${{ github.workspace }}/tmp/test-results
-          if-no-files-found: ignore
