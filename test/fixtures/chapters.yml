@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: "Chapter 1: The Beginning"
+  content: "This is the first chapter of the book."
+  book: one
+
+two:
+  title: "Chapter 2: The Middle"
+  content: "This is the second chapter of the book."
+  book: two
